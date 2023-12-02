@@ -52,3 +52,12 @@ def get_tweet_by_id(tweet_id):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+#My curl commands
+#curl http://localhost:5000/          (returns the message "Hello World.")
+#curl http://localhost:5000/tweets    (returns ALL of the tweets)
+#curl http://localhost:5000/tweets_filtered?hashtag=THEkarliehustle    (the tweets returned by a hashtag query parameter)
+#curl http://localhost:5000/tweet/1360000000000000000    (returns the JSON data for that particular id tweet)
+
+
+
