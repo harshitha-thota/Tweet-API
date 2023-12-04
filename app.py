@@ -15,6 +15,37 @@ def save_tweets():
     with open('100tweets.json', 'w') as outfile:
         json.dump(tweets, outfile, indent=2)
 
+# Endpoint to create a new tweet
+@app.route('/tweets', methods=['POST'])
+def create_tweet():
+    try:
+        data = request.get_json()
+        if not data or 'user_name' not in data or 'text' not in data:
+            raise ValueError("Bad or incomplete request. 'user_name' and 'text' are required fields.")
+
+        new_tweet = {
+            'id_str': len(tweets) + 1, 
+            'user_name': data['user_name'],
+            'text': data['text'],
+            'hashtags': data.get('hashtags', ''),
+            'created': data.get('created', ''),
+            'user_followers': data.get('user_followers', 0),
+            'user_friends': data.get('user_friends', 0),
+            'user_favorites': data.get('user_favorites', 0),
+            'expanded_url': data.get('expanded_url', ''),
+            'user_description': data.get('user_description', ''),
+            'user_created': data.get('user_created', ''),
+            'user_location': data.get('user_location', ''),
+            'source': data.get('source', ''),
+            'usr_mentions': data.get('usr_mentions', ''),
+        }
+
+        tweets.append(new_tweet)
+        save_tweets()
+        return jsonify(new_tweet), 201  # Created
+    except ValueError as e:
+        return str(e), 400  # Bad Request
+
 # Endpoint to return "Hello World"
 @app.route('/')
 def hello_world():
